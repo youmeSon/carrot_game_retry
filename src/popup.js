@@ -6,7 +6,7 @@ export default class PopUp {
     this.popUpMessage = document.querySelector('.pop-up__message');
     this.popUpRefresh = document.querySelector('.pop-up__refresh');
     this.popUpRefresh.addEventListener('click', () => {
-      this.onClick && this.onClick(); //등록된 callback이 있다면 이 함수를 호출해
+      this.onClick && this.onClick(); //등록된 callback이 있다면(true면) 이 함수를 호출해
       this.hide();
     });
   }
