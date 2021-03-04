@@ -1,7 +1,7 @@
 const CARROT_SIZE = 80;
 const CARROT_COUNT = 5;
 const BUG_COUNT = 5;
-const GAME_DURATION_SEC = 5;
+const GAME_DURATION_SEC = 10;
 
 const field = document.querySelector('.game__field');
 const fieldRect = field.getBoundingClientRect();
@@ -17,6 +17,7 @@ let started = false;
 let score = 0;
 let timer = undefined;
 
+field.addEventListener('click', onFieldClick);
 gameBtn.addEventListener('click', () => {
   if(started) {
     stopGame();
@@ -59,6 +60,7 @@ function startGameTimer() {
   timer = setInterval(() => {
     if(remainingTimeSec <= 0) {
       clearInterval(timer);
+      finishGame(CARROT_COUNT == score);
       return;
     }
     updateTimerText(--remainingTimeSec);
@@ -88,6 +90,32 @@ function initGame() {
   addItem('bug', BUG_COUNT, 'img/bug.png');
 }
 
+function onFieldClick(event) {
+  if(!started) {
+    return;
+  }
+  const target = event.target;
+  if(target.matches('.carrot')) {
+    target.remove();
+    score++;
+    updateScoreBoard();
+    if(score == CARROT_COUNT) {
+      finishGame(true);
+    }
+  } else if (target.matches('.bug')) {
+    stopGameTimer();
+    finishGame(false);
+  }
+}
+
+function finishGame(win) {
+  started = false;
+  hideGameButton();
+  showPopUpWithText(win? 'YOU WON 🎉' : 'YOU LOST 💩');
+}
+function updateScoreBoard() {
+  gameScore.innerText = CARROT_COUNT - score;
+}
 function addItem(className, count, imgPath) {
   const x1 = 0;
   const y1 = 0;
