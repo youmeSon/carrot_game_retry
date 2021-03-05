@@ -4,10 +4,9 @@ import * as sound from'./sound.js';
 const CARROT_SIZE = 80;
 
 export default class Field {
-  constructor(carrotCount, bugCount, carrotSize) {
+  constructor(carrotCount, bugCount) {
     this.carrotCount = carrotCount;
     this.bugCount = bugCount; 
-    this.carrotSize = carrotSize;
     this.field = document.querySelector('.game__field');
     this.fieldRect = this.field.getBoundingClientRect();
     this.field.addEventListener('click', this.onClick);
